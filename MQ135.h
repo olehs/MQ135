@@ -21,9 +21,9 @@ v1.0 - First release
  #include "WProgram.h"
 #endif
 
-/// The load resistance on the board
+/// The default load resistance on the board
 #define RLOAD 10.0
-/// Calibration resistance at atmospheric CO2 level
+/// Default calibration resistance at atmospheric CO2 level
 #define RZERO 76.63
 /// Parameters for calculating ppm of CO2 from sensor resistance
 #define PARA 116.6020682
@@ -36,11 +36,13 @@ v1.0 - First release
 #define CORD 0.0018
 
 /// Atmospheric CO2 level for calibration purposes
-#define ATMOCO2 397.13
+#define ATMOCO2 404.83 // as on https://www.co2.earth/
 
 class MQ135 {
  private:
   uint8_t _pin;
+  float _rload;
+  float _rzero;
 
  public:
   MQ135(uint8_t pin);
@@ -51,5 +53,7 @@ class MQ135 {
   float getCorrectedPPM(float t, float h);
   float getRZero();
   float getCorrectedRZero(float t, float h);
+  void setRLoad(float l);
+  void setRZero(float z);
 };
 #endif
